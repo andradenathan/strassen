@@ -83,7 +83,6 @@ public class MatrixImpl implements Matrix {
         }
     }
 
-
     public static Matrix add(Matrix A, Matrix B) {
         int size = A.getRowCount();
         List<List<Integer>> resultData = new ArrayList<>();
@@ -108,5 +107,46 @@ public class MatrixImpl implements Matrix {
             resultData.add(row);
         }
         return new MatrixImpl(resultData);
+    }
+
+    private static Matrix padMatrix(Matrix matrix, int newSize) {
+        int originalSize = matrix.getRowCount();
+        Matrix paddedMatrix = new MatrixImpl();
+
+        for (int i = 0; i < newSize; i++) {
+            List<Integer> row = new ArrayList<>();
+            for (int j = 0; j < newSize; j++) {
+                if (i < originalSize && j < originalSize) {
+                    row.add(matrix.get(i, j));
+                } else {
+                    row.add(0);
+                }
+            }
+            paddedMatrix.addRow(row);
+        }
+        return paddedMatrix;
+    }
+
+    private static Matrix unpadMatrix(Matrix matrix, int originalRows, int originalCols) {
+        List<List<Integer>> resultData = new ArrayList<>();
+
+        for (int i = 0; i < originalRows; i++) {
+            List<Integer> row = new ArrayList<>();
+            for (int j = 0; j < originalCols; j++) {
+                row.add(matrix.get(i, j));
+            }
+            resultData.add(row);
+        }
+        return new MatrixImpl(resultData);
+    }
+
+    @Override
+    public void print() {
+        for (int i = 0; i < getRowCount(); i++) {
+            for (int j = 0; j < getColumnCount(i); j++) {
+                System.out.print(get(i, j) + " ");
+            }
+            System.out.println();
+        }
     }
 }

@@ -116,4 +116,13 @@ public class SequentialStrassenImpl extends AbstractStrassen {
 
         return subMatricesResult;
     }
+
+    private static int nextPowerOfTwo(int dimension) {
+        int count = 0;
+        while (dimension > 0) {
+            dimension >>= 1;
+            count++;
+        }
+        return 1 << count;
+    }
 }

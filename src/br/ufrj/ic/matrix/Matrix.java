@@ -19,4 +19,9 @@ public interface Matrix {
 
     static Matrix subtract(Matrix A, Matrix B) { return  null; }
 
+    void print();
+
+    static Matrix padMatrix() { return  null; }
+
+    static Matrix unpadMatrix(Matrix matrix, int originalRows, int originalCols) { return null; }
 }
