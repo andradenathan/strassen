@@ -21,7 +21,7 @@ public interface Matrix {
 
     void print();
 
-    static Matrix padMatrix() { return  null; }
+    static Matrix padMatrix(Matrix matrix, int size) { return new MatrixImpl(); }
 
-    static Matrix unpadMatrix(Matrix matrix, int originalRows, int originalCols) { return null; }
+    static Matrix unpadMatrix(Matrix matrix, int originalRows, int originalCols) { return new MatrixImpl(); }
 }

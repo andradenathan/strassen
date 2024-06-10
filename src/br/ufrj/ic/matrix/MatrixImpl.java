@@ -109,7 +109,7 @@ public class MatrixImpl implements Matrix {
         return new MatrixImpl(resultData);
     }
 
-    private static Matrix padMatrix(Matrix matrix, int newSize) {
+    public static Matrix padMatrix(Matrix matrix, int newSize) {
         int originalSize = matrix.getRowCount();
         Matrix paddedMatrix = new MatrixImpl();
 
@@ -127,7 +127,7 @@ public class MatrixImpl implements Matrix {
         return paddedMatrix;
     }
 
-    private static Matrix unpadMatrix(Matrix matrix, int originalRows, int originalCols) {
+    public static Matrix unpadMatrix(Matrix matrix, int originalRows, int originalCols) {
         List<List<Integer>> resultData = new ArrayList<>();
 
         for (int i = 0; i < originalRows; i++) {

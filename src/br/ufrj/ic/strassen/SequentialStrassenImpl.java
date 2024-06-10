@@ -9,6 +9,19 @@ public class SequentialStrassenImpl extends AbstractStrassen {
     protected SequentialStrassenImpl() {}
 
     public static Matrix execute(Matrix A, Matrix B) {
+        int originalSize = A.getRowCount();
+        int size = nextPowerOfTwo(originalSize);
+
+        Matrix paddedA = MatrixImpl.padMatrix(A, size);
+        Matrix paddedB = MatrixImpl.padMatrix(B, size);
+
+        Matrix result = strassen(paddedA, paddedB);
+
+        return MatrixImpl.unpadMatrix(result, originalSize, originalSize);
+    }
+
+
+    public static Matrix strassen(Matrix A, Matrix B) {
         int size = A.getRowCount();
 
         if(size == BASE_CASE) return A.multiply(B);
@@ -79,37 +92,37 @@ public class SequentialStrassenImpl extends AbstractStrassen {
     private static Matrix[] computeSubMatricesProducts(Matrix[] subMatricesA, Matrix[] subMatricesB) {
         Matrix[] subMatricesResult = new Matrix[7];
 
-        subMatricesResult[0] = execute(
+        subMatricesResult[0] = strassen(
                 MatrixImpl.add(subMatricesA[0], subMatricesA[3]),
                 MatrixImpl.add(subMatricesB[0], subMatricesB[3])
         );
 
-        subMatricesResult[1] = execute(
+        subMatricesResult[1] = strassen(
                 MatrixImpl.add(subMatricesA[2], subMatricesA[3]),
                 subMatricesB[0]
         );
 
-        subMatricesResult[2] = execute(
+        subMatricesResult[2] = strassen(
                 subMatricesA[0],
                 MatrixImpl.subtract(subMatricesB[1], subMatricesB[3])
         );
 
-        subMatricesResult[3] = execute(
+        subMatricesResult[3] = strassen(
                 subMatricesA[3],
                 MatrixImpl.subtract(subMatricesB[2], subMatricesB[0])
         );
 
-        subMatricesResult[4] = execute(
+        subMatricesResult[4] = strassen(
                 MatrixImpl.add(subMatricesA[0], subMatricesA[1]),
                 subMatricesB[3]
         );
 
-        subMatricesResult[5] = execute(
+        subMatricesResult[5] = strassen(
                 MatrixImpl.subtract(subMatricesA[2], subMatricesA[0]),
                 MatrixImpl.add(subMatricesB[0], subMatricesB[1])
         );
 
-        subMatricesResult[6] = execute(
+        subMatricesResult[6] = strassen(
                 MatrixImpl.subtract(subMatricesA[1], subMatricesA[3]),
                 MatrixImpl.add(subMatricesB[2], subMatricesB[3])
         );
