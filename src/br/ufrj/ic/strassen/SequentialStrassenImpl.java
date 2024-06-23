@@ -2,6 +2,7 @@ package br.ufrj.ic.strassen;
 
 import br.ufrj.ic.matrix.Matrix;
 import br.ufrj.ic.matrix.MatrixImpl;
+import br.ufrj.ic.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -10,7 +11,7 @@ public class SequentialStrassenImpl extends AbstractStrassen {
 
     public static Matrix execute(Matrix A, Matrix B) {
         int originalSize = A.getRowCount();
-        int size = nextPowerOfTwo(originalSize);
+        int size = Utils.nextPowerOfTwo(originalSize);
 
         Matrix paddedA = MatrixImpl.padMatrix(A, size);
         Matrix paddedB = MatrixImpl.padMatrix(B, size);
@@ -46,7 +47,6 @@ public class SequentialStrassenImpl extends AbstractStrassen {
         Matrix C = new MatrixImpl();
 
         Matrix[] subMatricesResult = combinePartialSubMatricesResult(partialComputedSubMatricesResult);
-
 
         return mergeResults(C, subMatricesResult, size, newSize);
     }
@@ -128,14 +128,5 @@ public class SequentialStrassenImpl extends AbstractStrassen {
         );
 
         return subMatricesResult;
-    }
-
-    private static int nextPowerOfTwo(int dimension) {
-        int count = 0;
-        while (dimension > 0) {
-            dimension >>= 1;
-            count++;
-        }
-        return 1 << count;
     }
 }
