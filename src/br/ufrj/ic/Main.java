@@ -11,6 +11,18 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+        // TODO: receber os argumentos do programa.
+
+        if(args.length != 3) {
+            System.out.println("Usage: <input_filename> <output_filename> <threads>");
+            System.exit(1);
+        }
+
+        String inputFileName = args[0];
+        String outputFileName = args[1];
+        Integer threads = Integer.parseInt(args[2]);
+
+
         long start = System.nanoTime();
         List<List<Integer>> matrixDataA = new ArrayList<>();
 
