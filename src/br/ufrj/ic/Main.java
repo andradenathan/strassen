@@ -10,8 +10,8 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        if(args.length != 3) {
-            System.out.println("Usage: <matrix1_input_filename> <matrix2_input_filename> <threads>");
+        if(args.length < 3 || args.length > 4) {
+            System.out.println("Usage: <matrix1_input_filename> <matrix2_input_filename> <threads> --compare");
             System.exit(1);
         }
 
@@ -22,26 +22,38 @@ public class Main {
         Matrix A = Utils.parseInput(firstMatrixInputFileName);
         Matrix B = Utils.parseInput(secondMatrixInputFileName);
 
-        // Executar o algoritmo sequencial
-        System.out.println("\nResultado do algoritmo sequencial:");
-        long start = System.nanoTime();
-        Matrix sequential = SequentialStrassenImpl.execute(A, B);
-        long end = System.nanoTime();
-//
-//        sequential.print();
+        calculateConcurrent(A, B, threads);
 
-        Metrics metrics = new Metrics(start, end, 's');
-        metrics.print();
+        if(args.length == 4 && args[3].equals("--compare")) {
+            calculateSequential(A, B);
+        }
+    }
 
-        // Executar o algoritmo concorrente
-        System.out.println("\nResultado do algoritmo concorrente:");
+    public static void calculateConcurrent(Matrix A, Matrix B, Integer threads) {
+        System.out.println("Calculating matrix multiplication using Strassen's algorithm concurrent...");
         long startConcurrent = System.nanoTime();
-        Matrix concurrent = ConcurrentStrassenImpl.execute(A, B, threads);
+        Matrix concurrentStrassen = ConcurrentStrassenImpl.execute(A, B, threads);
         long endConcurrent = System.nanoTime();
 
-//        concurrent.print();
+        concurrentStrassen.printInFile("output_concurrent.txt");
 
-        Metrics concurrentMetrics = new Metrics(startConcurrent, endConcurrent, 's');
-        concurrentMetrics.print();
+        Metrics concurrentDuration = new Metrics(startConcurrent, endConcurrent, 's');
+        concurrentDuration.print();
+    }
+
+    public static void calculateSequential(Matrix A, Matrix B) throws IOException {
+        System.out.println("Calculating matrix multiplication using Strassen's algorithm sequential...");
+
+        long startSequential = System.nanoTime();
+        Matrix sequentialStrassen = SequentialStrassenImpl.execute(A, B);
+        long endSequential = System.nanoTime();
+
+        Metrics sequentialDuration = new Metrics(startSequential, endSequential, 's');
+        sequentialDuration.print();
+
+        sequentialStrassen.printInFile("output_sequential.txt");
+
+        System.out.println("Are the outputs identical? "
+                + Utils.areFilesIdentical("output_sequential.txt", "output_concurrent.txt"));
     }
 }

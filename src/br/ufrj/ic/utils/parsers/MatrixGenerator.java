@@ -5,12 +5,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class MatrixGenerator {
-    public void generateMatrix(Integer dimension, Integer threads, String inputFileName) {
+    public void generateMatrix(Integer dimension, String inputFileName) {
         try {
             FileWriter fileWriter = new FileWriter(inputFileName);
             PrintWriter printWriter = new PrintWriter(fileWriter);
-
-            printWriter.println(threads);
 
             printWriter.println(dimension);
 

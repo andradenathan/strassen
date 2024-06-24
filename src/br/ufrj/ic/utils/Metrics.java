@@ -1,14 +1,9 @@
 package br.ufrj.ic.utils;
 
 public class Metrics {
-    private Long duration;
+    private final Long duration;
 
-    private char unit;
-
-    public Metrics(long start, long end) {
-        this.duration = end - start;
-        this.unit = 'n';
-    }
+    private final char unit;
 
     public Metrics(long start, long end, char unit) {
         this.duration = end - start;
@@ -43,9 +38,9 @@ public class Metrics {
 
     public void print() {
         switch (unit) {
-            case 's' -> System.out.println("Duration: " + getDuration('s') + "s");
-            case 'm' -> System.out.println("Duration: " + getDuration('m') + "ms");
-            default -> System.out.println("Duration: " + getDuration() + "ns");
+            case 's' -> System.out.println("Duration: " + getDuration('s') + "s" + "\n");
+            case 'm' -> System.out.println("Duration: " + getDuration('m') + "ms" + "\n");
+            default -> System.out.println("Duration: " + getDuration() + "ns" + "\n");
         }
     }
 }

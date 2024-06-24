@@ -1,5 +1,6 @@
 package br.ufrj.ic.matrix;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface Matrix {
@@ -21,7 +22,6 @@ public interface Matrix {
 
     void print();
 
-    static Matrix padMatrix(Matrix matrix, int size) { return new MatrixImpl(); }
+    public void printInFile(String outputFilename);
 
-    static Matrix unpadMatrix(Matrix matrix, int originalRows, int originalCols) { return new MatrixImpl(); }
 }

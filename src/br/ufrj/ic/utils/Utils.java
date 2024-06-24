@@ -4,8 +4,11 @@ import br.ufrj.ic.matrix.Matrix;
 import br.ufrj.ic.matrix.MatrixImpl;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +17,6 @@ public class Utils {
 
     public static Matrix parseInput(String inputFileName) throws IOException {
         try(BufferedReader bufferedReader = new BufferedReader((new FileReader(inputFileName)))) {
-            bufferedReader.readLine();
-
             int dimension = Integer.parseInt(bufferedReader.readLine());
 
             List<List<Integer>> matrix = new ArrayList<>();
@@ -41,17 +42,36 @@ public class Utils {
             throw new IllegalArgumentException("Dimension must be positive");
         }
 
-        // Verifica se já é uma potência de dois
         if ((dimension & (1 << (Integer.SIZE - 1 - Integer.numberOfLeadingZeros(dimension)))) == dimension) {
             return dimension;
         }
 
-        // Calcula a próxima potência de dois
         int count = 0;
         while (dimension > 0) {
             dimension >>= 1;
             count++;
         }
         return 1 << count;
+    }
+
+    public static boolean areFilesIdentical(String firstFile, String secondFile) throws IOException {
+        if (Files.size(Paths.get(firstFile)) != Files.size(Paths.get(secondFile))) return false;
+
+        try (FileInputStream firstFileInputStream = new FileInputStream(firstFile);
+             FileInputStream secondFileInputStream = new FileInputStream(secondFile)) {
+
+            int byte1 = firstFileInputStream.read();
+            int byte2 = secondFileInputStream.read();
+
+            while (byte1 != -1 || byte2 != -1) {
+                if (byte1 != byte2) {
+                    return false;
+                }
+                byte1 = firstFileInputStream.read();
+                byte2 = secondFileInputStream.read();
+            }
+        }
+
+        return true;
     }
 }

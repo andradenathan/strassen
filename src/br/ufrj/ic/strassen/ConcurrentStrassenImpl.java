@@ -6,7 +6,7 @@ import br.ufrj.ic.utils.Utils;
 
 import java.util.concurrent.*;
 
-public class ConcurrentStrassenImpl extends AbstractStrassen {
+public class ConcurrentStrassenImpl {
     protected ConcurrentStrassenImpl() {}
 
     public static Matrix execute(Matrix A, Matrix B, Integer numThreads) {

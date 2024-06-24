@@ -6,7 +6,7 @@ import br.ufrj.ic.utils.Utils;
 
 import java.util.ArrayList;
 
-public class SequentialStrassenImpl extends AbstractStrassen {
+public class SequentialStrassenImpl {
     protected SequentialStrassenImpl() {}
 
     public static Matrix execute(Matrix A, Matrix B) {

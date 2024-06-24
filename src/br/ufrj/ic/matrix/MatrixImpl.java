@@ -1,5 +1,7 @@
 package br.ufrj.ic.matrix;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -149,6 +151,20 @@ public class MatrixImpl implements Matrix {
                 System.out.print(get(i, j) + " ");
             }
             System.out.println();
+        }
+    }
+
+    @Override
+    public void printInFile(String outputFilename) {
+        try (PrintWriter writer = new PrintWriter(outputFilename)) {
+            for (List<Integer> row : data) {
+                for (Integer element : row) {
+                    writer.print(element + " ");
+                }
+                writer.println();
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred while trying to write to the file: " + e.getMessage());
         }
     }
 }
