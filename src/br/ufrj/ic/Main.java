@@ -25,10 +25,10 @@ public class Main {
         // Executar o algoritmo sequencial
         System.out.println("\nResultado do algoritmo sequencial:");
         long start = System.nanoTime();
-        Matrix Sequential = SequentialStrassenImpl.execute(A, B);
+        Matrix sequential = SequentialStrassenImpl.execute(A, B);
         long end = System.nanoTime();
-
-        Sequential.print();
+//
+//        sequential.print();
 
         Metrics metrics = new Metrics(start, end, 's');
         metrics.print();
@@ -36,10 +36,10 @@ public class Main {
         // Executar o algoritmo concorrente
         System.out.println("\nResultado do algoritmo concorrente:");
         long startConcurrent = System.nanoTime();
-        Matrix Concurrent = ConcurrentStrassenImpl.execute(A, B);
+        Matrix concurrent = ConcurrentStrassenImpl.execute(A, B, threads);
         long endConcurrent = System.nanoTime();
 
-        Concurrent.print();
+//        concurrent.print();
 
         Metrics concurrentMetrics = new Metrics(startConcurrent, endConcurrent, 's');
         concurrentMetrics.print();

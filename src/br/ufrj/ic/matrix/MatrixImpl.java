@@ -111,8 +111,10 @@ public class MatrixImpl implements Matrix {
 
     public static Matrix padMatrix(Matrix matrix, int newSize) {
         int originalSize = matrix.getRowCount();
-        Matrix paddedMatrix = new MatrixImpl();
 
+        if(originalSize == newSize) return matrix;
+
+        Matrix paddedMatrix = new MatrixImpl();
         for (int i = 0; i < newSize; i++) {
             List<Integer> row = new ArrayList<>();
             for (int j = 0; j < newSize; j++) {
