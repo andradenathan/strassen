@@ -37,6 +37,16 @@ public class Utils {
     }
 
     public static int nextPowerOfTwo(int dimension) {
+        if (dimension <= 0) {
+            throw new IllegalArgumentException("Dimension must be positive");
+        }
+
+        // Verifica se já é uma potência de dois
+        if ((dimension & (1 << (Integer.SIZE - 1 - Integer.numberOfLeadingZeros(dimension)))) == dimension) {
+            return dimension;
+        }
+
+        // Calcula a próxima potência de dois
         int count = 0;
         while (dimension > 0) {
             dimension >>= 1;

@@ -1,6 +1,7 @@
 package br.ufrj.ic;
 
 import br.ufrj.ic.matrix.Matrix;
+import br.ufrj.ic.strassen.ConcurrentStrassenImpl;
 import br.ufrj.ic.strassen.SequentialStrassenImpl;
 import br.ufrj.ic.utils.Metrics;
 import br.ufrj.ic.utils.Utils;
@@ -21,13 +22,26 @@ public class Main {
         Matrix A = Utils.parseInput(firstMatrixInputFileName);
         Matrix B = Utils.parseInput(secondMatrixInputFileName);
 
+        // Executar o algoritmo sequencial
+        System.out.println("\nResultado do algoritmo sequencial:");
         long start = System.nanoTime();
-        Matrix C = SequentialStrassenImpl.execute(A, B);
+        Matrix sequential = SequentialStrassenImpl.execute(A, B);
         long end = System.nanoTime();
-
-        C.print();
+//
+//        sequential.print();
 
         Metrics metrics = new Metrics(start, end, 's');
         metrics.print();
+
+        // Executar o algoritmo concorrente
+        System.out.println("\nResultado do algoritmo concorrente:");
+        long startConcurrent = System.nanoTime();
+        Matrix concurrent = ConcurrentStrassenImpl.execute(A, B, threads);
+        long endConcurrent = System.nanoTime();
+
+//        concurrent.print();
+
+        Metrics concurrentMetrics = new Metrics(startConcurrent, endConcurrent, 's');
+        concurrentMetrics.print();
     }
 }

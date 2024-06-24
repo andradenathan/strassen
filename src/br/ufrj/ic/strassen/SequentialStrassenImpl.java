@@ -25,22 +25,12 @@ public class SequentialStrassenImpl extends AbstractStrassen {
     public static Matrix strassen(Matrix A, Matrix B) {
         int size = A.getRowCount();
 
-        if(size == BASE_CASE) return A.multiply(B);
+        if(size <= 32) return A.multiply(B);
 
         int newSize = size / 2;
 
-        Matrix[] subMatricesA = new Matrix[4];
-        Matrix[] subMatricesB = new Matrix[4];
-
-        subMatricesA[0] = A.getSubMatrix(0, 0, newSize); // A11
-        subMatricesA[1] = A.getSubMatrix(0, newSize, newSize); // A12
-        subMatricesA[2] = A.getSubMatrix(newSize, 0, newSize); // A21
-        subMatricesA[3] = A.getSubMatrix(newSize, newSize, newSize); // A22
-
-        subMatricesB[0] = B.getSubMatrix(0, 0, newSize); // B11
-        subMatricesB[1] = B.getSubMatrix(0, newSize, newSize); // B12
-        subMatricesB[2] = B.getSubMatrix(newSize, 0, newSize); // B21
-        subMatricesB[3] = B.getSubMatrix(newSize, newSize, newSize); // B22
+        Matrix[] subMatricesA = initializeSubMatrix(A, newSize);
+        Matrix[] subMatricesB = initializeSubMatrix(B, newSize);
 
         Matrix[] partialComputedSubMatricesResult = computeSubMatricesProducts(subMatricesA, subMatricesB);
 
@@ -49,6 +39,17 @@ public class SequentialStrassenImpl extends AbstractStrassen {
         Matrix[] subMatricesResult = combinePartialSubMatricesResult(partialComputedSubMatricesResult);
 
         return mergeResults(C, subMatricesResult, size, newSize);
+    }
+
+    private static Matrix[] initializeSubMatrix(Matrix matrix, int newSize) {
+        Matrix[] subMatrix = new Matrix[4];
+
+        subMatrix[0] = matrix.getSubMatrix(0, 0, newSize);
+        subMatrix[1] = matrix.getSubMatrix(0, newSize, newSize);
+        subMatrix[2] = matrix.getSubMatrix(newSize, 0, newSize);
+        subMatrix[3] = matrix.getSubMatrix(newSize, newSize, newSize);
+
+        return subMatrix;
     }
 
     private static Matrix mergeResults(Matrix C, Matrix[] subMatricesResult, int size, int newSize) {
