@@ -35,9 +35,8 @@ make test <dimension> <matrix_file_name> <matrix2_file_name> <threads>
 ### Autores
 
 <a href="https://github.com/andradenathan">
-<img src="https://avatars.githubusercontent.com/u/42661561?v=4" width="150px"/>
+    <img src="https://avatars.githubusercontent.com/u/42661561?v=4" width="150px"/>
 </a>
-
 <a href="https://github.com/mellaniepereira">
-<img src="https://avatars.githubusercontent.com/u/83502847?v=4" width="148px" />
+    <img src="https://avatars.githubusercontent.com/u/83502847?v=4" width="150px" />
 </a>
