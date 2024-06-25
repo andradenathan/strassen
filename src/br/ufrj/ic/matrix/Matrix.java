@@ -1,6 +1,5 @@
 package br.ufrj.ic.matrix;
 
-import java.io.IOException;
 import java.util.List;
 
 public interface Matrix {
@@ -22,6 +21,6 @@ public interface Matrix {
 
     void print();
 
-    public void printInFile(String outputFilename);
+    void printInFile(String outputFilename);
 
 }
